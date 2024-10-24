@@ -12,7 +12,7 @@ body::before {
   pointer-events: none;
   /* Allow interaction through the glow */
   background: radial-gradient(1000px circle at var(--cursor-x, 100px) var(--cursor-y, 100px),
-      rgba(24, 210, 110, 0.06),
+      rgba(0, 76, 255, 0.1),
       transparent 40%);
   transition: background-position 0.05s ease-out, opacity 0.3s ease-out;
   /* Smooth movement and opacity */

@@ -64,7 +64,7 @@
   <main class="main">
 
     <!-- Hero Section -->
-    <section id="hero" class="hero section dark-background">
+    <section id="hero" class="hero section">
 
       <!-- <img src="assets/img/hero-bg.jpg" alt="" data-aos="fade-in"> -->
 
@@ -72,7 +72,7 @@
         <div>
           <small class="lead">Hi, My name is</small>
           <h2>Azisya Luthfi Bintang</h2>
-          <p>I'm <span class="typed" data-typed-items="Designer, Developer, Freelancer, Photographer"></span><span
+          <p>I'm <span class="typed" data-typed-items="Software Designer, Web Developer, Freelancer"></span><span
               class="typed-cursor typed-cursor--blink"></span></p>
           <div class="social-links">
             <a href="https://github.com/luthfibintang"><i class="bi bi-github"></i></a>
@@ -108,33 +108,7 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
-
-  <!-- Custom Script -->
-  <script>
-    const body = document.querySelector('body');
-
-    // Update glow when mouse moves
-    document.addEventListener('mousemove', function (e) {
-      const x = e.clientX;
-      const y = e.clientY;
-
-      body.style.setProperty('--cursor-x', `${x}px`);
-      body.style.setProperty('--cursor-y', `${y}px`);
-
-      // Make sure the glow is visible when the cursor is inside the window
-      body.style.setProperty('--glow-opacity', `1`);
-    });
-
-    // Hide glow when cursor leaves the browser window
-    document.addEventListener('mouseleave', function () {
-      body.style.setProperty('--glow-opacity', `0`);
-    });
-
-    // Show glow again when cursor enters the browser window
-    document.addEventListener('mouseenter', function () {
-      body.style.setProperty('--glow-opacity', `1`);
-    });
-  </script>
+  <script src="assets/js/custom.js"></script>
 
 </body>
 

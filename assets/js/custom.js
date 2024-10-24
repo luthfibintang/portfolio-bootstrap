@@ -13,12 +13,12 @@ document.addEventListener('mousemove', function (e) {
   body.style.setProperty('--glow-opacity', `1`);
 });
 
-// Hide glow when cursor leaves the browser window
-document.addEventListener('mouseleave', function () {
-  body.style.setProperty('--glow-opacity', `0`);
-});
+// // Hide glow when cursor leaves the browser window
+// document.addEventListener('mouseleave', function () {
+//   body.style.setProperty('--glow-opacity', `0`);
+// });
 
-    // Show glow again when cursor enters the browser window
-document.addEventListener('mouseenter', function () {
-  body.style.setProperty('--glow-opacity', `1`);
-});
+//     // Show glow again when cursor enters the browser window
+// document.addEventListener('mouseenter', function () {
+//   body.style.setProperty('--glow-opacity', `1`);
+// });
