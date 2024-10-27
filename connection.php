@@ -1,7 +1,7 @@
 <?php
 $serverhost = "localhost";
-$username = "root";
-$password = "";
+$username = "bintang";
+$password = "17Maret1999";
 $dbName = "azisya-portfolio";
 
 // Membuat koneksi
