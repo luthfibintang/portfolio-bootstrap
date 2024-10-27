@@ -143,6 +143,12 @@ if ($result->num_rows > 0) {
             <!-- End Info Item -->
           </div>
 
+          <div class="row pt-4">
+            <div class="col-12 d-flex justify-content-center">
+              <h4>or</h4>
+            </div>
+          </div>
+
           <form
             method="POST"
             class="php-email-form"
