@@ -1,9 +1,43 @@
+<?php 
+include './connection.php';
+// Query to fetch data from the 'about' table and limit only 1 data to make sure there is not duplicate
+$sql = "SELECT * FROM about LIMIT 1";
+$result = $conn->query($sql);
+
+// Initialize variables to store fetched data
+$name = $bio = $education = "";
+$skills = [];
+$github = $instagram = $linkedin = "";
+
+// Fetch data if available
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $name = $row['name'];
+    $description = $row['description'];
+    $skills = explode(",", $row['technologies']); // Assumes skills are stored as a comma-separated list
+} else {
+    echo "No data found!";
+}
+
+// query to retrieve social links
+$query = "SELECT `name`, link FROM `social-link`";
+$res = $conn->query($query);
+
+$socialLinks = [];
+if ($res->num_rows > 0) {
+    while ($row = $res->fetch_assoc()) {
+        $socialLinks[$row['name']] = $row['link'];
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Contact - Personal Bootstrap Template</title>
+    <title>About - Personal Bootstrap Template</title>
     <meta name="description" content="" />
     <meta name="keywords" content="" />
 
@@ -40,19 +74,19 @@
     <link rel="stylesheet" href="assets/css/custom.css" />
   </head>
 
-  <body class="contact-page">
+  <body class="about-page">
     <header id="header" class="header d-flex align-items-center fixed-top">
       <div
         class="container-fluid container-xl position-relative d-flex align-items-center justify-content-center"
       >
         <nav id="navmenu" class="navmenu">
           <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="resume.html">Resume</a></li>
+            <li><a href="index.php">Home</a></li>
+            <li><a href="about.php" class="active">About</a></li>
+            <li><a href="resume.php">Resume</a></li>
             <!-- <li><a href="services.html">Services</a></li> -->
-            <li><a href="portfolio.html">Portfolio</a></li>
-            <li><a href="contact.html" class="active">Contact</a></li>
+            <li><a href="portfolio.php">Portfolio</a></li>
+            <li><a href="contact.php">Contact</a></li>
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
@@ -66,7 +100,7 @@
           <div class="container">
             <div class="row d-flex justify-content-center text-center">
               <div class="col-lg-8">
-                <h1>Contact</h1>
+                <h1>About Me</h1>
               </div>
             </div>
           </div>
@@ -74,119 +108,59 @@
       </div>
       <!-- End Page Title -->
 
-      <!-- Contact Section -->
-      <section id="contact" class="contact section">
+      <!-- About Section -->
+      <section id="about" class="about section">
         <div class="container" data-aos="fade-up" data-aos-delay="100">
-          <div class="row gy-4">
-            <div class="col-md-6">
-              <div
-                class="info-item d-flex align-items-center"
-                data-aos="fade-up"
-                data-aos-delay="400"
-              >
-                <i class="icon bi bi-envelope flex-shrink-0"></i>
-                <div>
-                  <h3>Email Me</h3>
-                  <p>azisya.luthfibintang@gmail.com</p>
+          <div class="row gy-4 justify-content-center">
+            <div class="col-lg-4">
+              <img src="assets/img/profile-img.jpg" class="img-fluid" alt="" />
+            </div>
+            <div class="col-lg-8 content">
+              <p class="pt-3">
+                Hello! My name is
+                <span class="highlight-text"><?php echo htmlspecialchars($name); ?></span>, 
+                <?php echo($description); ?>
+              </p>
+              <p>Here are a few technologies i've been working recently:</p>
+              <div class="row">
+                <?php
+                  // Divide skills into two columns
+                  $half = ceil(count($skills) / 2);
+                  $leftSkills = array_slice($skills, 0, $half);
+                  $rightSkills = array_slice($skills, $half);
+                ?>
+                <div class="col-lg-6">
+                  <ul>
+                    <?php foreach ($leftSkills as $skill) : ?>
+                      <li><i class="bi bi-dot"></i><?php echo htmlspecialchars($skill); ?></li>
+                    <?php endforeach; ?>
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <ul>
+                    <?php foreach ($rightSkills as $skill) : ?>
+                      <li><i class="bi bi-dot"></i><?php echo htmlspecialchars($skill); ?></li>
+                    <?php endforeach; ?>
+                  </ul>
                 </div>
               </div>
             </div>
-            <!-- End Info Item -->
-
-            <div class="col-md-6">
-              <div
-                class="info-item d-flex align-items-center"
-                data-aos="fade-up"
-                data-aos-delay="500"
-              >
-                <i class="icon bi bi-share flex-shrink-0"></i>
-                <div>
-                  <h3>Social Profiles</h3>
-                  <div class="social-links">
-                    <a target="_blank" href="https://github.com/luthfibintang"
-                      ><i class="bi bi-github"></i
-                    ></a>
-                    <a
-                      target="_blank"
-                      href="https://www.instagram.com/luthfibintang3/"
-                      ><i class="bi bi-instagram"></i
-                    ></a>
-                    <a
-                      target="_blank"
-                      href="https://www.linkedin.com/in/azisya-luthfi-bintang/"
-                      ><i class="bi bi-linkedin"></i
-                    ></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- End Info Item -->
           </div>
-
-          <form
-            action="forms/contact.php"
-            method="post"
-            class="php-email-form"
-            data-aos="fade-up"
-            data-aos-delay="600"
-          >
-            <div class="row gy-4">
-              <div class="col-md-6">
-                <input
-                  type="text"
-                  name="name"
-                  class="form-control"
-                  placeholder="Your Name"
-                  required=""
-                />
-              </div>
-
-              <div class="col-md-6">
-                <input
-                  type="email"
-                  class="form-control"
-                  name="email"
-                  placeholder="Your Email"
-                  required=""
-                />
-              </div>
-
-              <div class="col-md-12">
-                <input
-                  type="text"
-                  class="form-control"
-                  name="subject"
-                  placeholder="Subject"
-                  required=""
-                />
-              </div>
-
-              <div class="col-md-12">
-                <textarea
-                  class="form-control"
-                  name="message"
-                  rows="6"
-                  placeholder="Message"
-                  required=""
-                ></textarea>
-              </div>
-
-              <div class="col-md-12 text-center">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">
-                  Your message has been sent. Thank you!
-                </div>
-
-                <button type="submit">Send Message</button>
-              </div>
-            </div>
-          </form>
-          <!-- End Contact Form -->
         </div>
       </section>
-      <!-- /Contact Section -->
+      <!-- /About Section -->
     </main>
+
+    <footer id="footer" class="footer dark-background">
+      <div class="container">
+        <p>My Social:</p>
+        <div class="social-links d-flex justify-content-center">
+          <a target="_blank" href="<?= $socialLinks['github'] ?>"><i class="bi bi-github"></i></a>
+          <a target="_blank" href="<?= $socialLinks['instagram'] ?>"><i class="bi bi-instagram"></i></a>
+          <a target="_blank" href="<?= $socialLinks['linkedin'] ?>"><i class="bi bi-linkedin"></i></a>
+        </div>
+      </div>
+    </footer>
 
     <!-- Scroll Top -->
     <a

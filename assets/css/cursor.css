@@ -1,9 +1,10 @@
 body {
   position: relative;
+  min-height: 100vh;
 }
 
 body::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -11,9 +12,11 @@ body::before {
   height: 100%;
   pointer-events: none;
   /* Allow interaction through the glow */
-  background: radial-gradient(1000px circle at var(--cursor-x, 100px) var(--cursor-y, 100px),
-      rgba(0, 76, 255, 0.1),
-      transparent 40%);
+  background: radial-gradient(
+    1000px circle at var(--cursor-x, 100px) var(--cursor-y, 100px),
+    rgba(0, 76, 255, 0.1),
+    transparent 40%
+  );
   transition: background-position 0.05s ease-out, opacity 0.3s ease-out;
   /* Smooth movement and opacity */
   opacity: var(--glow-opacity, 1);

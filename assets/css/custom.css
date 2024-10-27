@@ -3,7 +3,7 @@ body {
 }
 
 body::before {
-  content: '';
+  content: "";
   position: fixed;
   top: 0;
   left: 0;
@@ -11,9 +11,11 @@ body::before {
   height: 100%;
   pointer-events: none;
   /* Allow interaction through the glow */
-  background: radial-gradient(1000px circle at var(--cursor-x, 100px) var(--cursor-y, 100px),
-      rgba(0, 76, 255, 0.1),
-      transparent 40%);
+  background: radial-gradient(
+    1000px circle at var(--cursor-x, 100px) var(--cursor-y, 100px),
+    rgba(0, 76, 255, 0.1),
+    transparent 40%
+  );
   transition: background-position 0.05s ease-out, opacity 0.3s ease-out;
   /* Smooth movement and opacity */
   opacity: var(--glow-opacity, 1);
@@ -28,4 +30,15 @@ body::before {
 
 .highlight-text {
   color: #5eead4;
+}
+
+.sent-status {
+  display: none;
+  color: #5eead4;
+  background: #2dd4bf1a;
+  text-align: center;
+  padding: 15px;
+  margin-bottom: 24px;
+  font-weight: 600;
+  border: 1px solid #5eead4;
 }

@@ -1,3 +1,24 @@
+<?php 
+include './connection.php';
+
+// Fetch portfolio items from the database
+$sql = "SELECT * FROM portfolio"; // Update this with your actual table name
+$result = $conn->query($sql);
+
+// query to retrieve social links
+$query = "SELECT `name`, link FROM `social-link`";
+$res = $conn->query($query);
+
+$socialLinks = [];
+if ($res->num_rows > 0) {
+    while ($row = $res->fetch_assoc()) {
+        $socialLinks[$row['name']] = $row['link'];
+    }
+}
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -47,12 +68,12 @@
       >
         <nav id="navmenu" class="navmenu">
           <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="resume.html">Resume</a></li>
+            <li><a href="index.php">Home</a></li>
+            <li><a href="about.php">About</a></li>
+            <li><a href="resume.php">Resume</a></li>
             <!-- <li><a href="services.html">Services</a></li> -->
-            <li><a href="portfolio.html" class="active">Portfolio</a></li>
-            <li><a href="contact.html">Contact</a></li>
+            <li><a href="portfolio.php" class="active">Portfolio</a></li>
+            <li><a href="contact.php">Contact</a></li>
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
@@ -105,66 +126,30 @@
               data-aos="fade-up"
               data-aos-delay="200"
             >
-              <div
-                class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app filter-product"
-              >
-                <div class="portfolio-content h-100">
-                  <img
-                    src="assets/img/portfolio/regrant-1.png"
-                    class="img-fluid"
-                    alt=""
-                  />
-                  <div class="portfolio-info">
-                    <h4>Regrant</h4>
-                    <p>Resource Sharing App</p>
-                    <a
-                      href="assets/img/portfolio/regrant-1.png"
-                      title="Regrant"
-                      data-gallery="portfolio-gallery-app"
-                      class="glightbox preview-link"
-                      ><i class="bi bi-zoom-in"></i
-                    ></a>
-                    <a
-                      href="portfolio-details.html"
-                      title="More Details"
-                      class="details-link"
-                      ><i class="bi bi-link-45deg"></i
-                    ></a>
+            <?php
+            // Loop through each portfolio item
+            if ($result->num_rows > 0) {
+              while($row = $result->fetch_assoc()) {
+                // Set up filter class based on type
+                $filterClass = strtolower($row['category']); 
+                ?>
+                <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-<?php echo $filterClass; ?>">
+                  <div class="portfolio-content h-100">
+                    <img src="<?php echo $row['image_url']; ?>" class="img-fluid" alt="<?php echo $row['project_name']; ?> Image" />
+                    <div class="portfolio-info">
+                      <h4><?php echo $row['project_name']; ?></h4>
+                      <p><?php echo $row['description']; ?></p>
+                      <a href="<?php echo $row['image_url']; ?>" title="<?php echo $row['project_name']; ?>" data-gallery="portfolio-gallery-<?php echo $filterClass; ?>" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                      <a href="portfolio-details.php?id=<?php echo $row['id']; ?>" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <!-- End Portfolio Item -->
-
-              <div
-                class="col-lg-4 col-md-6 portfolio-item isotope-item filter-design"
-              >
-                <div class="portfolio-content h-100">
-                  <img
-                    src="assets/img/portfolio/medmarket-1.png"
-                    class="img-fluid"
-                    alt=""
-                  />
-                  <div class="portfolio-info">
-                    <h4>Med Market UI/UX</h4>
-                    <p>Pharmacy Apps UI/UX & WireFrame</p>
-                    <a
-                      href="assets/img/portfolio/medmarket-1.png"
-                      title="MedMarket"
-                      data-gallery="portfolio-gallery-product"
-                      class="glightbox preview-link"
-                      ><i class="bi bi-zoom-in"></i
-                    ></a>
-                    <a
-                      href="portfolio-details.html"
-                      title="More Details"
-                      class="details-link"
-                      ><i class="bi bi-link-45deg"></i
-                    ></a>
-                  </div>
-                </div>
-              </div>
-              <!-- End Portfolio Item -->
-
+                <?php
+              }
+            } else {
+              echo "<p>No portfolio items found.</p>";
+            }
+            ?>
               <div
                 class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding"
               >
@@ -185,7 +170,7 @@
                       ><i class="bi bi-zoom-in"></i
                     ></a>
                     <a
-                      href="portfolio-details.html"
+                      href="portfolio-details.php"
                       title="More Details"
                       class="details-link"
                       ><i class="bi bi-link-45deg"></i
@@ -215,7 +200,7 @@
                       ><i class="bi bi-zoom-in"></i
                     ></a>
                     <a
-                      href="portfolio-details.html"
+                      href="portfolio-details.php"
                       title="More Details"
                       class="details-link"
                       ><i class="bi bi-link-45deg"></i
@@ -245,7 +230,7 @@
                       ><i class="bi bi-zoom-in"></i
                     ></a>
                     <a
-                      href="portfolio-details.html"
+                      href="portfolio-details.php"
                       title="More Details"
                       class="details-link"
                       ><i class="bi bi-link-45deg"></i
@@ -275,7 +260,7 @@
                       ><i class="bi bi-zoom-in"></i
                     ></a>
                     <a
-                      href="portfolio-details.html"
+                      href="portfolio-details.php"
                       title="More Details"
                       class="details-link"
                       ><i class="bi bi-link-45deg"></i
@@ -305,7 +290,7 @@
                       ><i class="bi bi-zoom-in"></i
                     ></a>
                     <a
-                      href="portfolio-details.html"
+                      href="portfolio-details.php"
                       title="More Details"
                       class="details-link"
                       ><i class="bi bi-link-45deg"></i
@@ -335,7 +320,7 @@
                       ><i class="bi bi-zoom-in"></i
                     ></a>
                     <a
-                      href="portfolio-details.html"
+                      href="portfolio-details.php"
                       title="More Details"
                       class="details-link"
                       ><i class="bi bi-link-45deg"></i
@@ -365,7 +350,7 @@
                       ><i class="bi bi-zoom-in"></i
                     ></a>
                     <a
-                      href="portfolio-details.html"
+                      href="portfolio-details.php"
                       title="More Details"
                       class="details-link"
                       ><i class="bi bi-link-45deg"></i
@@ -395,7 +380,7 @@
                       ><i class="bi bi-zoom-in"></i
                     ></a>
                     <a
-                      href="portfolio-details.html"
+                      href="portfolio-details.php"
                       title="More Details"
                       class="details-link"
                       ><i class="bi bi-link-45deg"></i
@@ -425,7 +410,7 @@
                       ><i class="bi bi-zoom-in"></i
                     ></a>
                     <a
-                      href="portfolio-details.html"
+                      href="portfolio-details.php"
                       title="More Details"
                       class="details-link"
                       ><i class="bi bi-link-45deg"></i
@@ -455,7 +440,7 @@
                       ><i class="bi bi-zoom-in"></i
                     ></a>
                     <a
-                      href="portfolio-details.html"
+                      href="portfolio-details.php"
                       title="More Details"
                       class="details-link"
                       ><i class="bi bi-link-45deg"></i
@@ -476,17 +461,9 @@
       <div class="container">
         <p>My Social:</p>
         <div class="social-links d-flex justify-content-center">
-          <a target="_blank" href="https://github.com/luthfibintang"
-            ><i class="bi bi-github"></i
-          ></a>
-          <a target="_blank" href="https://www.instagram.com/luthfibintang3/"
-            ><i class="bi bi-instagram"></i
-          ></a>
-          <a
-            target="_blank"
-            href="https://www.linkedin.com/in/azisya-luthfi-bintang/"
-            ><i class="bi bi-linkedin"></i
-          ></a>
+          <a target="_blank" href="<?= $socialLinks['github'] ?>"><i class="bi bi-github"></i></a>
+          <a target="_blank" href="<?= $socialLinks['instagram'] ?>"><i class="bi bi-instagram"></i></a>
+          <a target="_blank" href="<?= $socialLinks['linkedin'] ?>"><i class="bi bi-linkedin"></i></a>
         </div>
       </div>
     </footer>
